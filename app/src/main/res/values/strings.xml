@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">LocationDemo</string>
+    <string name="show_location_on_map">Show Location on Map</string>
+    <string name="show_navigation">Show Navigation</string>
+</resources>
