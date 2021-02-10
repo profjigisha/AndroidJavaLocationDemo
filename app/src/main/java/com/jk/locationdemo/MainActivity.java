@@ -22,7 +22,6 @@ import com.google.android.gms.maps.model.LatLng;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnOpenMap;
-    private Button btnShowNavigation;
     private TextView tvLocation;
     private LocationManager locationManager;
     private final String TAG = this.getClass().getCanonicalName();
@@ -36,9 +35,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         this.btnOpenMap = findViewById(R.id.btnOpenMap);
         this.btnOpenMap.setOnClickListener(this);
-
-        this.btnShowNavigation = findViewById(R.id.btnShowNavigation);
-        this.btnShowNavigation.setOnClickListener(this);
 
         tvLocation = findViewById(R.id.tvLocation);
 
@@ -85,10 +81,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             switch (view.getId()) {
                 case R.id.btnOpenMap:
                     this.showLocationOnMap();
-                    break;
-
-                case R.id.btnShowNavigation:
-
                     break;
             }
         }

@@ -20,6 +20,8 @@ android {
 
         manifestPlaceholders = [mapsApiKey : properties.getProperty("MAPS_API_KEY", "")]
 
+        resValue "string", "mapsApiKey", properties.getProperty("MAPS_API_KEY", "")
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -50,4 +52,8 @@ dependencies {
 
     //to display location on maps
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
+
+    //for directions
+    implementation 'com.google.maps:google-maps-services:0.1.20'
+    implementation 'com.google.maps.android:android-maps-utils:0.5'
 }
