@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.maps.model.LatLng;
 
 //https://github.com/profjigisha/AndroidJavaLocationDemo.git
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LocationManager locationManager;
     private final String TAG = this.getClass().getCanonicalName();
     private LatLng location;
+    private LocationCallback locationCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +45,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.locationManager.checkPermissions(this);
 
         if (this.locationManager.locationPermissionGranted) {
-            this.getLocation();
+//            this.getLocation();
+
+            locationCallback = new LocationCallback() {
+                @Override
+                public void onLocationResult(LocationResult locationResult) {
+                    if (locationResult == null) {
+                        return;
+                    }
+
+                    for (Location loc : locationResult.getLocations()) {
+                        tvLocation.setText("Lat : " + loc.getLatitude() + "\nLng : " + loc.getLongitude());
+                        Log.e(TAG, "Lat : " + loc.getLatitude() + "\nLng : " + loc.getLongitude());
+                        Log.e(TAG, "Number of locations" + locationResult.getLocations().size());
+                    }
+                }
+            };
+
+            this.locationManager.requestLocationUpdates(this, this.locationCallback);
         }
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        this.locationManager.stopLocationUpdates(this, this.locationCallback);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.locationManager.requestLocationUpdates(this, this.locationCallback);
+    }
+
+    @Override
     public void onClick(View view) {
-        if (view != null){
-            switch (view.getId()){
+        if (view != null) {
+            switch (view.getId()) {
                 case R.id.btnOpenMap:
 
                     break;
