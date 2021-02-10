@@ -1,7 +1,9 @@
 package com.jk.locationdemo;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +16,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btnOpenMap;
     private Button btnShowNavigation;
     private TextView tvLocation;
+    private LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.btnShowNavigation.setOnClickListener(this);
 
         tvLocation = findViewById(R.id.tvLocation);
+
+        this.locationManager = LocationManager.getInstance();
+        this.locationManager.checkPermissions(this);
     }
 
     @Override
@@ -41,6 +47,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     break;
             }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == this.locationManager.LOCATION_PERMISSION_REQUEST_CODE){
+            this.locationManager.locationPermissionGranted = (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED);
+
+            if (this.locationManager.locationPermissionGranted){
+                //start receiving location and display that on screen
+            }
+            return;
         }
     }
 }
